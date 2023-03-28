@@ -1,0 +1,119 @@
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+# define MAX 50
+void main()
+{
+char str[10];
+int len,i,j,k,l,num;
+char val,pre;
+FILE* ptr;
+ptr=fopen("code.txt","r");
+if(ptr==NULL)
+printf("File cannot be opened");
+val=getc(ptr);
+while(val!= EOF)
+{
+    num=0;
+    if(isdigit(val)!=0)
+    {
+        num=val-48;
+        val=getc(ptr);
+        while(val!=EOF && isdigit(val)!=0)
+        {
+            num=num*10+val-48;
+            val=getc(ptr);
+        }
+    }
+    if(num!=0)
+    {
+        printf("\t\t%d - Number\n",num);
+        continue;
+    }
+    switch(val)
+    {
+        case '+':
+        case '-':
+        case '*':
+        case '/': pre=val;
+        val=getc(ptr);
+        if (val=='=')
+        {
+            printf("\t\t%c%c - Assignment operator\n",pre,val);
+            val=getc(ptr);
+            continue;
+        }
+        else if(val=='/')
+        {
+            do
+            {
+                val=getc(ptr);
+            }while(val!='\n');
+            val=getc(ptr);
+        }
+        else
+        {
+            printf("\t\t%c - Arithmetic operator\n",pre);
+            continue;
+        }
+        break;
+    case ',':
+    case ';': printf("\t\t%c - Punctuation Mark\n",val);
+                val=getc(ptr);
+            continue;
+            break;
+    case '(':
+    case ')':
+    case '{':
+    case '}': printf("\t\t%c - Bracket\n",val);
+            val=getc(ptr);
+            continue;
+            break;
+    case '=':
+    case '>':
+    case '<': pre=val;
+        val=getc(ptr);
+        if (val=='=')
+        {   
+            printf("\t\t%c%c- Relational operator\n",pre,val);
+            val=getc(ptr);
+                continue;
+        }
+        else
+        {
+            if(pre=='=')
+                printf("\t\t%c - Assignment operator\n",pre);
+            else
+                printf("\t\t%c - Relational operator\n",pre);
+            continue;
+        }
+        break;
+    default: break;
+    }
+i=0;
+if(isalpha(val)!=0)
+{
+    str[i++]=val;
+    val=getc(ptr);
+    while(val!=EOF && (isdigit(val)!=0 || isalpha(val)!=0 || val=='_'))
+    {
+        str[i++]=val;
+        val=getc(ptr);  
+    }
+    str[i]='\0';
+    if(strcmp(str,"int")==0||strcmp(str,"if")==0||strcmp(str,"while")==0||strcmp(str,"printf")==0||strcmp(str,"for")==0||strcmp(st
+r,"char")==0||strcmp(str,"char")==0)
+    {
+        printf("\t\t%s - Keyword\n",str);
+        continue;
+    }
+    else
+    {
+        printf("\t\t%s - Identifier\n",str);
+        continue;
+    }
+}
+val=getc(ptr);
+}
+fclose(ptr);
+}
