@@ -1,0 +1,23 @@
+%{
+#include<stdio.h>
+#include<ctype.h>
+int i;
+%}
+%%
+[a-zA-Z]+ {
+for(i=0;i<yyleng;i++)
+{
+yytext[i]=toupper(yytext[i]);
+}
+printf("%s",yytext);
+}
+%%
+int main()
+{
+printf("\nenter the string : ");
+yylex();
+}
+int yywrap()
+{
+return 1;
+}

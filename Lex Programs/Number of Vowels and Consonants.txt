@@ -1,0 +1,30 @@
+%{
+#include<stdio.h>
+int v,c;
+%}
+%%
+[a-zA-Z]+ {
+for(int i=0;i<yyleng;i++)
+{if(yytext[i]=='a'||yytext[i]=='e'||yytext[i]=='i'||yytext[i]=='o'||yytext[i]=='u'||yytext[i]=='A'||yytext[i]=='E'||yytext[i]=='I'||yytext[
+i]=='O'||yytext[i]=='U')
+{
+v++;
+}
+else
+{
+c++;
+}
+}
+}
+%%
+int main()
+{
+printf("\nenter the string :");
+yylex();
+printf("\nvowels : %d",v);
+printf("\nconsonants : %d",c);
+}
+int yywrap()
+{
+return 1;
+}

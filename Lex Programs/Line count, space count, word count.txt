@@ -1,0 +1,22 @@
+%{
+#include<stdio.h>
+int ln,sc,wc,ch;
+%}
+%%
+\n {ln++;wc++;}
+\t {sc++;wc++;}
+. {ch++;}
+%%
+int main()
+{
+printf("\nenter the script :");
+yylex();
+printf("\nline count: %d",ln);
+printf("\nspace count: %d",sc);
+printf("\nword count: %d",wc);
+printf("\ncharacter count: %d\n\n",ch);
+}
+int yywrap()
+{
+return 1;
+}
